@@ -6,7 +6,7 @@ from conans import CMake
 
 class GFlagsConan(ConanFile):
     name = "gflags"
-    version = "2.1.2"
+    version = "2.2.0"
     generators = "cmake"
     settings = "os", "arch", "compiler", "build_type"
     options = {"shared": [True, False]}
@@ -47,7 +47,7 @@ class GFlagsConan(ConanFile):
         self.copy(pattern="*.h", dst="include", src=incdir, keep_path=True)
 
         # Copying static and dynamic libs
-        libdir = "_build/%s/lib" % self.zip_folder_name
+        libdir = "_build/%s" % self.zip_folder_name
         self.copy(pattern="*.a", dst="lib", src=libdir, keep_path=False)
         self.copy(pattern="*.lib", dst="lib", src=libdir, keep_path=False)
         self.copy(pattern="*.so*", dst="lib", src=libdir, keep_path=False)

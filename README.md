@@ -5,7 +5,7 @@
 
 [Conan.io](https://conan.io) package for Google's GFlags library
 
-The packages generated with this **conanfile** can be found in [conan.io](https://conan.io/source/gflags/2.1.2/eliaskousk/stable).
+The packages generated with this **conanfile** can be found in [conan.io](https://conan.io/source/gflags/2.2.0/eliaskousk/stable).
 
 ## Build packages
 
@@ -15,20 +15,20 @@ Download conan client from [Conan.io](https://conan.io) and run:
 
 ## Upload packages to server
 
-    $ conan upload gflags/2.1.2@eliaskousk/stable --all
+    $ conan upload gflags/2.2.0@eliaskousk/stable --all
 
 ## Reuse the packages
 
 ### Basic setup
 
-    $ conan install gflags/2.1.2@eliaskousk/stable
+    $ conan install gflags/2.2.0@eliaskousk/stable
 
 ### Project setup
 
 If you handle multiple dependencies in your project is better to add a *conanfile.txt*
 
     [requires]
-    gflags/2.1.2@eliaskousk/stable
+    gflags/2.2.0@eliaskousk/stable
 
     [options]
     gtest:shared=true # false
