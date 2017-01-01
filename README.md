@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/eliaskousk/conan-gflags.svg)](https://travis-ci.org/eliaskousk/conan-gflags)
+[![Build Status](https://travis-ci.org/eliaskousk/conan-gflags.svg?branch=release/2.2.0)](https://travis-ci.org/eliaskousk/conan-gflags)
 
 # conan-gflags
 
