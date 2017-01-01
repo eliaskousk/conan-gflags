@@ -1,6 +1,5 @@
 [![Build Status](https://travis-ci.org/eliaskousk/conan-gflags.svg)](https://travis-ci.org/eliaskousk/conan-gflags)
 
-
 # conan-gflags
 
 [Conan.io](https://conan.io) package for Google's GFlags library
