@@ -46,13 +46,19 @@ class GFlagsConan(ConanFile):
         incdir = "_build/%s/include" % self.zip_folder_name
         self.copy(pattern="*.h", dst="include", src=incdir, keep_path=True)
 
-        # Copying static and dynamic libs
-        libdir = "_build/%s" % self.zip_folder_name
+        # Copying static libs
+        libdir = "_build/lib"
         self.copy(pattern="*.a", dst="lib", src=libdir, keep_path=False)
         self.copy(pattern="*.lib", dst="lib", src=libdir, keep_path=False)
+        # Copying dynamic libs
+        libdir = "_build/%s" % self.zip_folder_name
         self.copy(pattern="*.so*", dst="lib", src=libdir, keep_path=False)
         self.copy(pattern="*.dylib*", dst="lib", src=libdir, keep_path=False)
         self.copy(pattern="*.dll", dst="bin", src=libdir, keep_path=False)
 
     def package_info(self):
         self.cpp_info.libs = ['gflags']
+
+        if self.settings.os == "Linux":
+            self.cpp_info.libs.append("pthread")
+
