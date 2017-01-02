@@ -10,7 +10,7 @@ class GFlagsConan(ConanFile):
     generators = "cmake"
     settings = "os", "arch", "compiler", "build_type"
     options = {"shared": [True, False]}
-    default_options = "shared=True"
+    default_options = "shared=False"
     exports="CMakeLists.txt", "FindGflags.cmake", "change_dylib_names.sh"
     url="http://github.com/eliaskousk/conan-gflags"
     license="https://github.com/gflags/gflags/blob/master/COPYING.txt"

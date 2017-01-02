@@ -32,7 +32,7 @@ If you handle multiple dependencies in your project is better to add a *conanfil
     gflags/2.2.0@eliaskousk/stable
 
     [options]
-    gtest:shared=true # false
+    gflags:shared=true # false
 
     [generators]
     txt
