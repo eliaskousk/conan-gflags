@@ -50,6 +50,7 @@ class GFlagsConan(ConanFile):
         libdir = "_build/lib"
         self.copy(pattern="*.a", dst="lib", src=libdir, keep_path=False)
         self.copy(pattern="*.lib", dst="lib", src=libdir, keep_path=False)
+
         # Copying dynamic libs
         libdir = "_build/%s" % self.zip_folder_name
         self.copy(pattern="*.so*", dst="lib", src=libdir, keep_path=False)
