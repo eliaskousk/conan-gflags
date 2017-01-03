@@ -9,8 +9,8 @@ class GFlagsConan(ConanFile):
     version = "2.2.0"
     generators = "cmake"
     settings = "os", "arch", "compiler", "build_type"
-    options = {"shared": [True, False]}
-    default_options = "shared=False"
+    options = {"shared": [True, False], "fpic": [True, False]}
+    default_options = "shared=False", "fpic=True"
     exports="CMakeLists.txt", "FindGflags.cmake", "change_dylib_names.sh"
     url="http://github.com/eliaskousk/conan-gflags"
     license="https://github.com/gflags/gflags/blob/master/COPYING.txt"
@@ -31,7 +31,8 @@ class GFlagsConan(ConanFile):
             self.run("mkdir _build")
         cd_build = "cd _build"
         shared = "-DBUILD_SHARED_LIBS=1" if self.options.shared else ""
-        self.run("%s && cmake .. %s %s" % (cd_build, cmake.command_line, shared))
+        fpic = "-DCMAKE_POSITION_INDEPENDENT_CODE=TRUE" if self.options.fpic else ""
+        self.run("%s && cmake .. %s %s %s" % (cd_build, cmake.command_line, shared, fpic))
         self.run("%s && cmake --build . %s" % (cd_build, cmake.build_config))
 
     def package(self):
@@ -46,16 +47,18 @@ class GFlagsConan(ConanFile):
         incdir = "_build/%s/include" % self.zip_folder_name
         self.copy(pattern="*.h", dst="include", src=incdir, keep_path=True)
 
-        # Copying static libs
-        libdir = "_build/lib"
-        self.copy(pattern="*.a", dst="lib", src=libdir, keep_path=False)
-        self.copy(pattern="*.lib", dst="lib", src=libdir, keep_path=False)
+        if self.options.shared:
+            # Copying dynamic libs
+            libdir = "_build/%s" % self.zip_folder_name
+            self.copy(pattern="*.so*", dst="lib", src=libdir, keep_path=False)
+            self.copy(pattern="*.dylib*", dst="lib", src=libdir, keep_path=False)
+            self.copy(pattern="*.dll", dst="bin", src=libdir, keep_path=False)
+        else:
+            # Copying static libs
+            libdir = "_build/lib"
+            self.copy(pattern="*.a", dst="lib", src=libdir, keep_path=False)
 
-        # Copying dynamic libs
-        libdir = "_build/%s" % self.zip_folder_name
-        self.copy(pattern="*.so*", dst="lib", src=libdir, keep_path=False)
-        self.copy(pattern="*.dylib*", dst="lib", src=libdir, keep_path=False)
-        self.copy(pattern="*.dll", dst="bin", src=libdir, keep_path=False)
+        self.copy(pattern="*.lib", dst="lib", src=libdir, keep_path=False)
 
     def package_info(self):
         self.cpp_info.libs = ['gflags']
