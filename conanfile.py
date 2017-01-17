@@ -2,6 +2,7 @@ from conans import ConanFile
 import os
 from conans.tools import download
 from conans.tools import unzip
+from conans.tools import cpu_count
 from conans import CMake
 
 class GFlagsConan(ConanFile):
@@ -33,7 +34,7 @@ class GFlagsConan(ConanFile):
         shared = "-DBUILD_SHARED_LIBS=1" if self.options.shared else ""
         fpic = "-DCMAKE_POSITION_INDEPENDENT_CODE=TRUE" if self.options.fpic else ""
         self.run("%s && cmake .. %s %s %s" % (cd_build, cmake.command_line, shared, fpic))
-        self.run("%s && cmake --build . %s" % (cd_build, cmake.build_config))
+        self.run("%s && cmake --build . %s -- -j%s" % (cd_build, cmake.build_config, cpu_count()))
 
     def package(self):
 
