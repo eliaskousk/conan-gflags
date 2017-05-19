@@ -26,15 +26,17 @@ class GFlagsConan(ConanFile):
 
     def build(self):
         cmake = CMake(self.settings)
+        jobs = ""
         if self.settings.os == "Windows":
             self.run("IF not exist _build mkdir _build")
         else:
             self.run("mkdir _build")
+            jobs = "-- -j%s" % (cpu_count() + 1)
         cd_build = "cd _build"
         shared = "-DBUILD_SHARED_LIBS=1" if self.options.shared else ""
         fpic = "-DCMAKE_POSITION_INDEPENDENT_CODE=TRUE" if self.options.fpic else ""
         self.run("%s && cmake .. %s %s %s" % (cd_build, cmake.command_line, shared, fpic))
-        self.run("%s && cmake --build . %s -- -j%s" % (cd_build, cmake.build_config, cpu_count()))
+        self.run("%s && cmake --build . %s %s" % (cd_build, cmake.build_config, jobs))
 
     def package(self):
 
